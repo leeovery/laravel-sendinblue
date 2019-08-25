@@ -1,0 +1,52 @@
+{
+    "name": "leeovery/laravel-sendinblue",
+    "description": "Mail driver for Laravel to send emails via the SendInBlue v3 API",
+    "keywords": [
+        "leeovery",
+        "laravel-sendinblue"
+    ],
+    "homepage": "https://github.com/leeovery/laravel-sendinblue",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Lee Overy",
+            "email": "me@leeovery.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.8.*",
+        "sendinblue/api-v3-sdk": "^6.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Leeovery\\LaravelSendInBlue\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Leeovery\\LaravelSendInBlue\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Leeovery\\LaravelSendInBlue\\LaravelSendInBlueServiceProvider"
+            ]
+        }
+    }
+}
