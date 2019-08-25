@@ -2,6 +2,7 @@
 
 namespace Leeovery\LaravelSendInBlue;
 
+use Swift_MimePart;
 use Swift_Mime_SimpleMessage;
 use SendinBlue\Client\Api\SMTPApi;
 use Illuminate\Mail\Transport\Transport;
@@ -36,15 +37,11 @@ class SendInBlueTransport extends Transport
 
         $recipients = $this->getRecipients($message);
 
-        dd($recipients);
-
         $message->setBcc([]);
 
         $response = $this->client->sendTransacEmail(
             $this->buildPayload($message, $recipients)
         );
-
-        dd($response);
 
         $message->getHeaders()->addTextHeader(
             'X-SendInBlue-Transmission-ID', $response->getMessageId()
@@ -73,7 +70,8 @@ class SendInBlueTransport extends Transport
                 'email' => key($from),
             ],
             'to'          => $recipients,
-            'htmlContent' => $message->toString(),
+            'htmlContent' => $message->getBody(),
+            //'textContent' => '',
             'subject'     => $message->getSubject(),
         ]);
     }
