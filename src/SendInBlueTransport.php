@@ -2,7 +2,6 @@
 
 namespace Leeovery\LaravelSendInBlue;
 
-use Swift_MimePart;
 use Swift_Mime_SimpleMessage;
 use SendinBlue\Client\Api\SMTPApi;
 use Illuminate\Mail\Transport\Transport;
@@ -37,6 +36,7 @@ class SendInBlueTransport extends Transport
 
         $recipients = $this->getRecipients($message);
 
+        $message->setCc([]);
         $message->setBcc([]);
 
         $response = $this->client->sendTransacEmail(
@@ -53,7 +53,33 @@ class SendInBlueTransport extends Transport
     }
 
     /**
+     * Get all the addresses this message should be sent to.
+     *
      * @param  Swift_Mime_SimpleMessage  $message
+     * @return array
+     */
+    protected function getRecipients(Swift_Mime_SimpleMessage $message)
+    {
+        $recipients = [];
+
+        foreach ((array) $message->getTo() as $email => $name) {
+            $recipients['to'][] = compact('email', 'name');
+        }
+
+        foreach ((array) $message->getCc() as $email => $name) {
+            $recipients['cc'][] = compact('email', 'name');
+        }
+
+        foreach ((array) $message->getBcc() as $email => $name) {
+            $recipients['bcc'][] = compact('email', 'name');
+        }
+
+        return $recipients;
+    }
+
+    /**
+     * @param  Swift_Mime_SimpleMessage  $message
+     * @param  array                     $recipients
      * @return SendSmtpEmail
      */
     private function buildPayload(Swift_Mime_SimpleMessage $message, $recipients): SendSmtpEmail
@@ -69,37 +95,17 @@ class SendInBlueTransport extends Transport
                 'name'  => current($from),
                 'email' => key($from),
             ],
-            'to'          => $recipients,
+            'to'          => $recipients['to'],
+            'cc'          => $recipients['cc'] ?? [],
+            'bcc'         => $recipients['bcc'] ?? [],
             'htmlContent' => $message->getBody(),
             //'textContent' => '',
             'subject'     => $message->getSubject(),
         ]);
     }
 
-    /**
-     * Get all the addresses this message should be sent to.
-     *
-     * Note that SparkPost still respects CC, BCC headers in raw message itself.
-     *
-     * @param  Swift_Mime_SimpleMessage  $message
-     * @return array
-     */
-    protected function getRecipients(Swift_Mime_SimpleMessage $message)
+    public function sibClient(): SMTPApi
     {
-        $recipients = [];
-
-        foreach ((array) $message->getTo() as $email => $name) {
-            $recipients[] = compact('name', 'email');
-        }
-
-        foreach ((array) $message->getCc() as $email => $name) {
-            $recipients[] = compact('name', 'email');
-        }
-
-        foreach ((array) $message->getBcc() as $email => $name) {
-            $recipients[] = compact('name', 'email');
-        }
-
-        return $recipients;
+        return $this->client;
     }
 }
