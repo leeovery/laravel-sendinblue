@@ -1,8 +1,6 @@
 # Laravel Mail Driver For SendInBlue
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/leeovery/laravel-sendinblue.svg?style=flat-square)](https://packagist.org/packages/leeovery/laravel-sendinblue)
-[![Build Status](https://img.shields.io/travis/leeovery/laravel-sendinblue/master.svg?style=flat-square)](https://travis-ci.org/leeovery/laravel-sendinblue)
-[![Quality Score](https://img.shields.io/scrutinizer/g/leeovery/laravel-sendinblue.svg?style=flat-square)](https://scrutinizer-ci.com/g/leeovery/laravel-sendinblue)
 [![Total Downloads](https://img.shields.io/packagist/dt/leeovery/laravel-sendinblue.svg?style=flat-square)](https://packagist.org/packages/leeovery/laravel-sendinblue)
 
 Mail driver for Laravel to send emails via the SendInBlue v3 API.
