@@ -32,7 +32,12 @@ To use this driver simply set the following config in your `/config/services.php
 
 ```
 
-End your SendInBlue V3 API key to your env file with the key `SENDINBLUE_SECRET`. Then update your defined mail driver to `sendinblue` under `MAIL_DRIVER`.
+Add the following to your env with your SendInBlue v3 API key:
+
+```
+SENDINBLUE_SECRET={your SendInBlue v3 API key goes here}
+MAIL_DRIVER=sendinblue
+```
 
 ### Testing
 
