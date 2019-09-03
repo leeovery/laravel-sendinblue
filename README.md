@@ -1,11 +1,9 @@
-# Very short description of the package
+# Laravel Mail Driver For SendInBlue
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/leeovery/laravel-sendinblue.svg?style=flat-square)](https://packagist.org/packages/leeovery/laravel-sendinblue)
-[![Build Status](https://img.shields.io/travis/leeovery/laravel-sendinblue/master.svg?style=flat-square)](https://travis-ci.org/leeovery/laravel-sendinblue)
-[![Quality Score](https://img.shields.io/scrutinizer/g/leeovery/laravel-sendinblue.svg?style=flat-square)](https://scrutinizer-ci.com/g/leeovery/laravel-sendinblue)
 [![Total Downloads](https://img.shields.io/packagist/dt/leeovery/laravel-sendinblue.svg?style=flat-square)](https://packagist.org/packages/leeovery/laravel-sendinblue)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Mail driver for Laravel to send emails via the SendInBlue v3 API.
 
 ## Installation
 
@@ -17,8 +15,26 @@ composer require leeovery/laravel-sendinblue
 
 ## Usage
 
+To use this driver simply set the following config in your `/config/services.php` file as follows:
+
 ``` php
-// Usage description here
+
+'sendinblue' => [
+    'secret'     => env('SENDINBLUE_SECRET'),
+    
+    // optionally provide this but will default to whats specified here...
+    'options' => [
+        'endpoint' => 'https://api.sendinblue.com/v3',
+    ],
+],
+
+```
+
+Add the following to your env with your SendInBlue v3 API key:
+
+```
+SENDINBLUE_SECRET={your SendInBlue v3 API key goes here}
+MAIL_DRIVER=sendinblue
 ```
 
 ### Testing
