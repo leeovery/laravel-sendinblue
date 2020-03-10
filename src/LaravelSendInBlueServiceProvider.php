@@ -3,6 +3,7 @@
 namespace Leeovery\LaravelSendInBlue;
 
 use Illuminate\Support\Arr;
+use Illuminate\Mail\MailManager;
 use SendinBlue\Client\Api\SMTPApi;
 use GuzzleHttp\Client as HttpClient;
 use SendinBlue\Client\Configuration;
@@ -15,8 +16,8 @@ class LaravelSendInBlueServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app['swift.transport']->extend('sendinblue', function ($app) {
-            return $app->make('laravel-sendinblue');
+        $this->app[MailManager::class]->extend('sendinblue', function () {
+            return $this->app->make('laravel-sendinblue');
         });
     }
 
